@@ -226,7 +226,7 @@
         justify-content: space-between;
         margin-bottom: 31px;
     }
-    &__icon{
+    &__icon {
         width: 62px;
         height: 365px;
         fill: #cda355;
@@ -248,11 +248,13 @@
             margin-bottom: 26px;
             transition: all 0.5s;
             cursor: pointer;
-            &:hover{
+            &:hover {
                 background-color: #cda355;
-                .about__icon{
+                border: 1px solid $darkgrey;
+                .about__icon {
                     fill: #ffffff;
                 }
+
             }
         }
         &-title {
@@ -279,6 +281,12 @@
             padding: 7px 5px;
             background-color: #d4c198;
             margin-bottom: 15px;
+            transition: all 0.5s;
+            &:hover{
+                background-color: #c99c47;
+                color: $darkgrey;
+                border-radius: 5px;
+            }
         }
         &-bottom__text {
             font-size: 11px;
@@ -301,12 +309,19 @@
         padding: 9px 5px;
         margin: 0 8px;
         text-align: center;
+        transition: all 0.5s;
     }
     &__register {
         background-color: #c99c47;
+        &:hover {
+            color: $darkgrey;
+        }
     }
     &__subscribe {
         background-color: $darkgrey;
+        &:hover {
+            color: #c99c47;
+        }
     }
 }
 .reviews {
@@ -401,12 +416,12 @@
         }
     }
 }
-.video{
+.video {
     padding: 50px 0;
-    &__title{
+    &__title {
         margin-bottom: 20px;
     }
-    &__box{
+    &__box {
         text-align: center;
     }
 }
