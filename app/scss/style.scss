@@ -226,6 +226,12 @@
         justify-content: space-between;
         margin-bottom: 31px;
     }
+    &__icon{
+        width: 62px;
+        height: 365px;
+        fill: #cda355;
+        transition: all 0.5s;
+    }
     &__item {
         max-width: 360px;
         width: 100%;
@@ -240,6 +246,14 @@
             justify-content: center;
             margin: 0 auto;
             margin-bottom: 26px;
+            transition: all 0.5s;
+            cursor: pointer;
+            &:hover{
+                background-color: #cda355;
+                .about__icon{
+                    fill: #ffffff;
+                }
+            }
         }
         &-title {
             font-size: 17px;
