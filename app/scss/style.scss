@@ -114,6 +114,7 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     position: relative;
     &__overlay {
         position: absolute;
@@ -140,6 +141,7 @@
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
+            padding: 20px 10px;
         }
         .banner__slider-prev {
             left: -45px;
@@ -253,6 +255,7 @@
                 border: 1px solid $darkgrey;
                 .about__icon {
                     fill: #ffffff;
+                    transform: scale(1.1);
                 }
 
             }

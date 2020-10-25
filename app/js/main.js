@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const modal = document.querySelector('.modal'),
         closeBtns = document.querySelectorAll('.modal__close'),
+        subscribeCloseBtn = document.querySelector('[data-subscribe-close]'),
         openBtns = document.querySelectorAll('.about__subscribe');
 
     function openModal(window){
@@ -103,9 +104,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.body.style.overflow = '';
             });
         });
+        modal.addEventListener('click', (e) => {
+            console.log(e.target);
+            if (e.target == modal) {
+                window.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
 
+    }
+    function fadeBG(window, closeBtnData) {
+        modal.addEventListener('mouseover', (e) => {
+            if (e.target != modal && e.target != subscribeCloseBtn){
+                window.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                closeBtnData.style.cssText = 'transform: scale(1); color: rgba(255, 255, 255, 0.8)';
+            } else{
+                window.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+                closeBtnData.style.cssText = 'transform: scale(1.3); color: rgba(0, 0, 0, 0.8)';
+            }
+            console.log(e.target);
+            
+        });
+        modal.addEventListener('mouseout', (e) => {
+            if (e.target == modal){
+                window.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                closeBtnData.style.cssText = 'transform: scale(1); color: rgba(255, 255, 255, 0.8)';
+            }
+            
+        });
     }
     openModal(modal);
     closeModal(modal);
+    fadeBG(modal, subscribeCloseBtn);
 
 });
