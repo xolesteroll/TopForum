@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         reviewSliderInner = document.querySelector('.reviews__slider-inner'),
         marginLeft = +window.getComputedStyle(reviewSlides[1]).marginLeft.slice(0, (window.getComputedStyle(reviewSlides[1]).marginLeft.length - 2)),
         wrapperWidth = window.getComputedStyle(reviewSliderWrapper).width;
-    let reviewOffset = 0;
+    let reviewOffset;
 
     // Banner slider
     const slides = document.querySelectorAll('.banner__slider-item'),
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         bannerItemMarginLeft = +window.getComputedStyle(slides[1]).marginLeft.slice(0, window.getComputedStyle(slides[1]).marginLeft.length - 2),
         width = window.getComputedStyle(slidesWrapper).width;
 
-    let offset = 0;
+    let offset;
 
     // CLients Slider
 
@@ -34,18 +34,18 @@ document.addEventListener("DOMContentLoaded", function () {
         clientsSliderInner = document.querySelector('.clients__slider-inner'),
         clientsItemMarginLeft = +window.getComputedStyle(clientsSlides[1]).marginLeft.slice(0, window.getComputedStyle(clientsSlides[1]).marginLeft.length - 2),
         clientsWrapperWidth = window.getComputedStyle(clientsSliderWrapper).width;
-    let clientsOffset = 0;
+    let clientsOffset;
     
 
-    sliderInit(clientsSlides, clientsPrev, clientsNext, clientsSliderWrapper, clientsSliderInner, clientsItemMarginLeft, clientsWrapperWidth, clientsOffset, 6);
+    sliderInit(clientsSlides, clientsPrev, clientsNext, clientsSliderWrapper, clientsSliderInner, clientsItemMarginLeft, clientsWrapperWidth, clientsOffset, 6, 2);
     sliderInit(slides, prev, next, slidesWrapper, slidesField, bannerItemMarginLeft, width, offset, 1);
-    sliderInit(reviewSlides, reviewPrev, reviewNext, reviewSliderWrapper, reviewSliderInner, marginLeft, wrapperWidth, reviewOffset, 2);
+    sliderInit(reviewSlides, reviewPrev, reviewNext, reviewSliderWrapper, reviewSliderInner, marginLeft, wrapperWidth, reviewOffset, 2, 2);
 
     // Slider Init Function
-    function sliderInit(slides, prev, next, slidesWindow, slidesField, marginLeft, slidesWindowWidth, offset, slidesToShow) {
+    function sliderInit(slides, prev, next, slidesWindow, slidesField, marginLeft, slidesWindowWidth, offset, slidesToShow, slidesToScroll = 1) {
         offset = 0;
         slidesField.style.width = 100 * slides.length + '%';
-
+    
         slides.forEach(slide => {
             if (marginLeft != 0) {
                 slide.style.width = (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) - (marginLeft * (slidesToShow - 1))) / slidesToShow  + 'px';
@@ -53,41 +53,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 slide.style.width = +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) / slidesToShow + 'px';
             }
         });
-
+    
         next.addEventListener('click', () => {
             if (marginLeft != 0) {
                 if (offset >= (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) * ((Math.round(slides.length) / slidesToShow) - 1))) {
                     offset = 0;
                 } else {
-                    offset += +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) + marginLeft;
+                    offset += ((+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) - (marginLeft * (slidesToShow - 1))) / slidesToShow) * slidesToScroll + (marginLeft * slidesToScroll);
                 }
+                console.log(offset);
             } else {
                 if (offset >= (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) * ((Math.round(slides.length) / slidesToShow) - 1))) {
                     offset = 0;
                 } else {
-                    offset += +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2);
+                    offset += +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) / slidesToShow * slidesToScroll;
                 }
             }
             slidesField.style.transform = `translateX(-${offset}px)`;
-
+    
         });
-
+    
         prev.addEventListener('click', () => {
             if (marginLeft != 0) {
                 if (offset == 0) {
                     offset = (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) + marginLeft) * ((Math.round(slides.length) / slidesToShow) - 1);
                 } else {
-                    offset -= +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) + marginLeft;
+                    offset -= ((+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) - (marginLeft * (slidesToShow - 1))) / (slidesToShow)) * slidesToScroll + (marginLeft * slidesToScroll);
                 }
             } else {
                 if (offset == 0) {
                     offset = +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) * ((Math.round(slides.length) / slidesToShow) - 1);
                 } else {
-                    offset -= +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2);
+                    offset -= +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) / slidesToShow * slidesToScroll;
                 }
             }
             slidesField.style.transform = `translateX(-${offset}px)`;
-
+    
         });
     }
 
