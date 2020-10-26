@@ -2,14 +2,14 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Reviews Slider
+
     const bannerSlider = document.querySelector('.banner__slider');
     const reviewsSlider = document.querySelector('.reviews__slider');
     const clientsSlider = document.querySelector('.clients__slider');
     
     sliderInit(bannerSlider, 1, 1);
     sliderInit(reviewsSlider, 2, 1);
-    sliderInit(clientsSlider, 6, 1);
+    sliderInit(clientsSlider, 6, 2);
 
     // Slider Init Function
     function sliderInit(slider, slidesToShow = 1, slidesToScroll = 1) {
