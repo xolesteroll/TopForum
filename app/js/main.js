@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         reviewPrev = document.querySelector('.reviews__slider-prev'),
         reviewSliderWrapper = document.querySelector('.reviews__slider-wrapper'),
         reviewSliderInner = document.querySelector('.reviews__slider-inner'),
-        marginLeft = +window.getComputedStyle(reviewSlides[1]).marginLeft.slice(0, (window.getComputedStyle(reviewSlides[1]).marginLeft.length - 2)),
+        marginLeft = parseInt(window.getComputedStyle(reviewSlides[1]).marginLeft),
         wrapperWidth = window.getComputedStyle(reviewSliderWrapper).width;
     let reviewOffset;
 
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         next = document.querySelector('.banner__slider-next'),
         slidesWrapper = document.querySelector('.banner__slider-wrapper'),
         slidesField = document.querySelector('.banner__slider-inner'),
-        bannerItemMarginLeft = +window.getComputedStyle(slides[1]).marginLeft.slice(0, window.getComputedStyle(slides[1]).marginLeft.length - 2),
+        bannerItemMarginLeft = parseInt(window.getComputedStyle(slides[1]).marginLeft),
         width = window.getComputedStyle(slidesWrapper).width;
 
     let offset;
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         clientsPrev = document.querySelector('.clients__slider-prev'),
         clientsSliderWrapper = document.querySelector('.clients__slider-wrapper'),
         clientsSliderInner = document.querySelector('.clients__slider-inner'),
-        clientsItemMarginLeft = +window.getComputedStyle(clientsSlides[1]).marginLeft.slice(0, window.getComputedStyle(clientsSlides[1]).marginLeft.length - 2),
+        clientsItemMarginLeft = parseInt(window.getComputedStyle(clientsSlides[1]).marginLeft),
         clientsWrapperWidth = window.getComputedStyle(clientsSliderWrapper).width;
     let clientsOffset;
     
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Slider Init Function
     function sliderInit(slides, prev, next, slidesWindow, slidesField, marginLeft, slidesWindowWidth, offset, slidesToShow, slidesToScroll = 1) {
         offset = 0;
-        slidesField.style.width = 100 * slides.length + '%';
+        slidesField.style.width = ((slidesWindowWidth - (marginLeft * (slidesToShow - 1))) * (slides.length / slidesToShow)) + (marginLeft * (slides.length - 1)) + 'px';
     
         slides.forEach(slide => {
             if (marginLeft != 0) {
