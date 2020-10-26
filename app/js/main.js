@@ -3,46 +3,31 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     // Reviews Slider
-    const reviewSlides = document.querySelectorAll('.reviews__slider-item'),
-        reviewNext = document.querySelector('.reviews__slider-next'),
-        reviewPrev = document.querySelector('.reviews__slider-prev'),
-        reviewSliderWrapper = document.querySelector('.reviews__slider-wrapper'),
-        reviewSliderInner = document.querySelector('.reviews__slider-inner'),
-        marginLeft = parseInt(window.getComputedStyle(reviewSlides[1]).marginLeft),
-        wrapperWidth = parseInt(window.getComputedStyle(reviewSliderWrapper).width);
-    let reviewOffset;
-
-    // Banner slider
-    const slides = document.querySelectorAll('.banner__slider-item'),
-        prev = document.querySelector('.banner__slider-prev'),
-        next = document.querySelector('.banner__slider-next'),
-        slidesWrapper = document.querySelector('.banner__slider-wrapper'),
-        slidesField = document.querySelector('.banner__slider-inner'),
-        bannerItemMarginLeft = parseInt(window.getComputedStyle(slides[1]).marginLeft),
-        width = parseInt(window.getComputedStyle(slidesWrapper).width);
-
-    let offset;
-
-    // CLients Slider
-
-    const clientsSlides = document.querySelectorAll('.clients__slider-item'),
-        clientsNext = document.querySelector('.clients__slider-next'),
-        clientsPrev = document.querySelector('.clients__slider-prev'),
-        clientsSliderWrapper = document.querySelector('.clients__slider-wrapper'),
-        clientsSliderInner = document.querySelector('.clients__slider-inner'),
-        clientsItemMarginLeft = parseInt(window.getComputedStyle(clientsSlides[1]).marginLeft),
-        clientsWrapperWidth = parseInt(window.getComputedStyle(clientsSliderWrapper).width);
-    let clientsOffset;
+    const bannerSlider = document.querySelector('.banner__slider');
+    const reviewsSlider = document.querySelector('.reviews__slider');
+    const clientsSlider = document.querySelector('.clients__slider');
     
-
-    sliderInit(clientsSlides, clientsPrev, clientsNext, clientsSliderWrapper, clientsSliderInner, clientsItemMarginLeft, clientsWrapperWidth, clientsOffset, 6, 2);
-    sliderInit(slides, prev, next, slidesWrapper, slidesField, bannerItemMarginLeft, width, offset, 1);
-    sliderInit(reviewSlides, reviewPrev, reviewNext, reviewSliderWrapper, reviewSliderInner, marginLeft, wrapperWidth, reviewOffset, 2, 2);
+    sliderInit(bannerSlider, 1, 1);
+    sliderInit(reviewsSlider, 2, 1);
+    sliderInit(clientsSlider, 6, 1);
 
     // Slider Init Function
-    function sliderInit(slides, prev, next, slidesWindow, slidesField, marginLeft, slidesWindowWidth, offset, slidesToShow, slidesToScroll = 1) {
-        offset = 0;
+    function sliderInit(slider, slidesToShow = 1, slidesToScroll = 1) {
+        const slides = slider.querySelectorAll('[data-slider-slide]'),
+        prev = slider.querySelector('[data-slider-prev]'),
+        next = slider.querySelector('[data-slider-next]'),
+        slidesWindow = slider.querySelector('[data-slider-wrapper]'),
+        slidesField = slider.querySelector('[data-slider-inner]'),
+        marginLeft = parseInt(window.getComputedStyle(slides[1]).marginLeft),
+        slidesWindowWidth = parseInt(window.getComputedStyle(slidesWindow).width);
+  
+        let offset = 0;
+
         slidesField.style.width = ((slidesWindowWidth - (marginLeft * (slidesToShow - 1))) * (slides.length / slidesToShow)) + (marginLeft * (slides.length - 1)) + 'px';
+        slidesField.style.display = 'flex';
+        slidesWindow.style.overflow = 'hidden';
+        
+        let slidesFieldWidth = parseInt(window.getComputedStyle(slidesField).width);
     
         slides.forEach(slide => {
             if (marginLeft != 0) {
@@ -59,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     offset += ((slidesWindowWidth - (marginLeft * (slidesToShow - 1))) / slidesToShow) * slidesToScroll + (marginLeft * slidesToScroll);
                 }
-                console.log(offset);
             } else {
                 if (offset >= (slidesWindowWidth * ((Math.round(slides.length) / slidesToShow) - 1))) {
                     offset = 0;
@@ -74,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         prev.addEventListener('click', () => {
             if (marginLeft != 0) {
                 if (offset == 0) {
-                    offset = (slidesWindowWidth * ((Math.round(slides.length) / slidesToShow) - 1));
+                    offset = slidesFieldWidth - slidesWindowWidth;
                 } else {
                     offset -= ((slidesWindowWidth - (marginLeft * (slidesToShow - 1))) / (slidesToShow)) * slidesToScroll + (marginLeft * slidesToScroll);
                 }
@@ -113,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
             closeBtnData.style.cssText = 'transform: scale(1); color: rgba(255, 255, 255, 0.8)';
         } else {
             window.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-            closeBtnData.style.cssText = 'transform: scale(1.3); color: rgba(0, 0, 0, 0.8)';
+            closeBtnData.style.cssText = 'font-size: 70px; color: rgba(0, 0, 0, 0.8); transform: translateY(-10%)';
         }
         if (event.target == window && eventType == 'mouseout') {
             window.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
