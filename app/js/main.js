@@ -1,6 +1,4 @@
-// $(function() {
-//     $('.banner__slider').slick();
-// });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -10,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
         reviewPrev = document.querySelector('.reviews__slider-prev'),
         reviewSliderWrapper = document.querySelector('.reviews__slider-wrapper'),
         reviewSliderInner = document.querySelector('.reviews__slider-inner'),
-        marginLeft = +window.getComputedStyle(reviewSlides[1]).marginLeft.slice(0, (window.getComputedStyle(reviewSlides[1]).marginLeft.length - 2)),
-        wrapperWidth = window.getComputedStyle(reviewSliderWrapper).width;
+        marginLeft = parseInt(window.getComputedStyle(reviewSlides[1]).marginLeft),
+        wrapperWidth = parseInt(window.getComputedStyle(reviewSliderWrapper).width);
     let reviewOffset;
 
     // Banner slider
@@ -20,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
         next = document.querySelector('.banner__slider-next'),
         slidesWrapper = document.querySelector('.banner__slider-wrapper'),
         slidesField = document.querySelector('.banner__slider-inner'),
-        bannerItemMarginLeft = +window.getComputedStyle(slides[1]).marginLeft.slice(0, window.getComputedStyle(slides[1]).marginLeft.length - 2),
-        width = window.getComputedStyle(slidesWrapper).width;
+        bannerItemMarginLeft = parseInt(window.getComputedStyle(slides[1]).marginLeft),
+        width = parseInt(window.getComputedStyle(slidesWrapper).width);
 
     let offset;
 
@@ -32,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
         clientsPrev = document.querySelector('.clients__slider-prev'),
         clientsSliderWrapper = document.querySelector('.clients__slider-wrapper'),
         clientsSliderInner = document.querySelector('.clients__slider-inner'),
-        clientsItemMarginLeft = +window.getComputedStyle(clientsSlides[1]).marginLeft.slice(0, window.getComputedStyle(clientsSlides[1]).marginLeft.length - 2),
-        clientsWrapperWidth = window.getComputedStyle(clientsSliderWrapper).width;
+        clientsItemMarginLeft = parseInt(window.getComputedStyle(clientsSlides[1]).marginLeft),
+        clientsWrapperWidth = parseInt(window.getComputedStyle(clientsSliderWrapper).width);
     let clientsOffset;
     
 
@@ -44,29 +42,29 @@ document.addEventListener("DOMContentLoaded", function () {
     // Slider Init Function
     function sliderInit(slides, prev, next, slidesWindow, slidesField, marginLeft, slidesWindowWidth, offset, slidesToShow, slidesToScroll = 1) {
         offset = 0;
-        slidesField.style.width = 100 * slides.length + '%';
+        slidesField.style.width = ((slidesWindowWidth - (marginLeft * (slidesToShow - 1))) * (slides.length / slidesToShow)) + (marginLeft * (slides.length - 1)) + 'px';
     
         slides.forEach(slide => {
             if (marginLeft != 0) {
-                slide.style.width = (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) - (marginLeft * (slidesToShow - 1))) / slidesToShow  + 'px';
+                slide.style.width = (slidesWindowWidth - (marginLeft * (slidesToShow - 1))) / slidesToShow  + 'px';
             } else {
-                slide.style.width = +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) / slidesToShow + 'px';
+                slide.style.width = slidesWindowWidth / slidesToShow + 'px';
             }
         });
     
         next.addEventListener('click', () => {
             if (marginLeft != 0) {
-                if (offset >= (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) * ((Math.round(slides.length) / slidesToShow) - 1))) {
+                if (offset >= (slidesWindowWidth * ((Math.round(slides.length) / slidesToShow) - 1))) {
                     offset = 0;
                 } else {
-                    offset += ((+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) - (marginLeft * (slidesToShow - 1))) / slidesToShow) * slidesToScroll + (marginLeft * slidesToScroll);
+                    offset += ((slidesWindowWidth - (marginLeft * (slidesToShow - 1))) / slidesToShow) * slidesToScroll + (marginLeft * slidesToScroll);
                 }
                 console.log(offset);
             } else {
-                if (offset >= (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) * ((Math.round(slides.length) / slidesToShow) - 1))) {
+                if (offset >= (slidesWindowWidth * ((Math.round(slides.length) / slidesToShow) - 1))) {
                     offset = 0;
                 } else {
-                    offset += +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) / slidesToShow * slidesToScroll;
+                    offset += slidesWindowWidth / slidesToShow * slidesToScroll;
                 }
             }
             slidesField.style.transform = `translateX(-${offset}px)`;
@@ -76,15 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
         prev.addEventListener('click', () => {
             if (marginLeft != 0) {
                 if (offset == 0) {
-                    offset = (+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) + marginLeft) * ((Math.round(slides.length) / slidesToShow) - 1);
+                    offset = (slidesWindowWidth * ((Math.round(slides.length) / slidesToShow) - 1));
                 } else {
-                    offset -= ((+slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) - (marginLeft * (slidesToShow - 1))) / (slidesToShow)) * slidesToScroll + (marginLeft * slidesToScroll);
+                    offset -= ((slidesWindowWidth - (marginLeft * (slidesToShow - 1))) / (slidesToShow)) * slidesToScroll + (marginLeft * slidesToScroll);
                 }
             } else {
                 if (offset == 0) {
-                    offset = +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) * ((Math.round(slides.length) / slidesToShow) - 1);
+                    offset = slidesWindowWidth * ((Math.round(slides.length) / slidesToShow) - 1);
                 } else {
-                    offset -= +slidesWindowWidth.slice(0, slidesWindowWidth.length - 2) / slidesToShow * slidesToScroll;
+                    offset -= slidesWindowWidth / slidesToShow * slidesToScroll;
                 }
             }
             slidesField.style.transform = `translateX(-${offset}px)`;

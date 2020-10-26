@@ -129,6 +129,11 @@
         top: 50%;
         transform: translateY(-50%);
         width: 424px;
+        &-item{
+            & + .banner__slider-item{
+                margin-left: 30px;
+            }
+        }
         &-wrapper {
             overflow: hidden;
         }
